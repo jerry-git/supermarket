@@ -1,14 +1,28 @@
 import pytest
 from supermarket.facility import Store, Product
+from supermarket.accounting import TIMESTAMP_FORMAT
 from unittest.mock import MagicMock
 from collections import namedtuple
+import datetime as dt
+
+
+
+def fake_timestamp():
+    '''
+    Returns timestamp strings starting from 2000-01-01 10:00:00
+    Hours are increased by one every time this is called during a single test
+    '''
+    stamp = dt.datetime(2000,1,1,10)
+    while True:
+        yield stamp.strftime(TIMESTAMP_FORMAT)
+        stamp += dt.timedelta(hours=1)
+
+
 
 
 @pytest.fixture
 def use_fake_timestamps(monkeypatch):
-    fake_stamps = ['2000-01-01 10:00:00', '2000-01-01 11:00:00', '2000-01-01 12:00:00']
-    mock_stamps = MagicMock(side_effect=fake_stamps)
-
+    mock_stamps = MagicMock(side_effect=fake_timestamp())
     monkeypatch.setattr('supermarket.accounting.Receipt._create_time_stamp', mock_stamps)
 
 @pytest.fixture

@@ -1,5 +1,6 @@
 import datetime as dt
 
+TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 class NotEnoughMoney(Exception):
     pass
@@ -13,7 +14,7 @@ class Receipt:
 
     @staticmethod
     def _create_time_stamp():
-        return dt.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        return dt.datetime.utcnow().strftime(TIMESTAMP_FORMAT)
 
 
     def __str__(self):
