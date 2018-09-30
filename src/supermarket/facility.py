@@ -40,6 +40,9 @@ class Store:
     def get_sales_report(self):
         return self._cashier.get_sales_report()
 
+    def get_sales_excel_report(self):
+        raise NotImplementedError()
+
 
     def _get_product_by_name(self, name):
         for product in self._available_products:
